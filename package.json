@@ -8,7 +8,7 @@
     "prestart": "npm run build",
     "start:dev": "export DEBUG=dev && nodemon --exec babel-node server/src/app.js",
     "build": "babel server/src/ -d server/dist/",
-    "test": "NODE_ENV=test nyc --reporter=text mocha ./server/test/ --recursive -r @babel/register -r @babel/polyfill",
+    "test": "NODE_ENV=test nyc --reporter=text mocha ./server/src/test/ --recursive -r @babel/register -r @babel/polyfill",
     "coveralls": "nyc report --reporter=lcov --reporter=text-lcov | ./node_modules/coveralls/bin/coveralls.js ",
     "coverage": "nyc report --reporter=text-lcov",
     "heroku-postbuild": "npm run build",
@@ -18,10 +18,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mocha": "^8.3.2",
     "morgan": "^1.10.0",
     "pg": "^8.6.0"
   },
@@ -29,10 +32,12 @@
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.13.16",
     "@babel/node": "^7.13.13",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.13.15",
     "@babel/register": "^7.13.16",
     "eslint": "^7.24.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "nyc": "^15.1.0"
   }
 }
