@@ -14,6 +14,18 @@ export const findByEmail = async (email) => {
 };
 
 /**
+  * @function findById
+  * @description searches the users table for user email
+  * @param {string} id user id
+  * @returns {object} user object
+  */
+export const findById = async (id) => {
+  const query = 'SELECT * FROM users WHERE id=$1';
+  const response = await db.query(query, [id]);
+  return response;
+};
+
+/**
   * @function insertUser
   * @description searches the users table for user email
   * @param {string} email user email address
