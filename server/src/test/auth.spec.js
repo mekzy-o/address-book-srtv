@@ -3,7 +3,6 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chaiHttp from 'chai-http';
 import app from '../app';
-import db from '../database';
 
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
@@ -13,7 +12,6 @@ const { expect } = chai;
 
 after(() => {
   request.close();
-  db.query('DELETE FROM users');
 });
 
 describe('POST auth/signup', () => {
@@ -133,17 +131,31 @@ describe('Signin API', () => {
   });
 
   context('post request', () => {
-    const userWithoutEmail = {
-      email: faker.internet.password(),
+    const userWithInvalidPassword = {
+      email: faker.internet.email(),
       password: 'passwor',
     };
     it('Should throw error if password is less than 6 characters', async () => {
       const { status, body: { error } } = await request
         .post(url)
-        .send(userWithoutEmail);
+        .send(userWithInvalidPassword);
       expect(status).to.be.eql(422);
       expect(error).to.be.instanceOf(Object);
       expect(error).to.have.a.property('password');
+    });
+  });
+
+  context('post request', () => {
+    const userDoesNotExist = {
+      email: faker.internet.email(),
+      password: 'Maths@1077',
+    };
+    it('Should throw error if email does not exist', async () => {
+      const { status, body } = await request
+        .post(url)
+        .send(userDoesNotExist);
+      expect(status).to.be.eql(401);
+      expect(body).to.have.a.property('error');
     });
   });
 
