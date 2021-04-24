@@ -3,7 +3,7 @@ import Debug from 'debug';
 import morgan from 'morgan';
 import cors from 'cors';
 import router from './routes';
-import ErrorHandler from './middleware/errorHandler';
+import { ErrorHandler } from './middlewares/errorHandler';
 // import Seed from './db/seed';
 
 const debug = Debug('dev');
@@ -28,7 +28,7 @@ app.use('*', (req, res) => {
 });
 
 // default error handler
-app.use(ErrorHandler.sendError);
+app.use(ErrorHandler);
 
 export default app.listen(port, async () => {
   debug(`Server started on port ${port}`);
