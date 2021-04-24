@@ -56,12 +56,6 @@ export const AuthorizationError = class extends ApplicationError {
   }
 };
 
-export const MethodNotAllowedError = class extends ApplicationError {
-  constructor(message) {
-    super(message || 'Request Method Not allowed for this resource', 405);
-  }
-};
-
 export const InvalidRequestBodyError = class extends ApplicationError {
   constructor(message) {
     super(message || 'Invalid Request Body', 422);
@@ -77,18 +71,6 @@ export const TokenNotProvidedError = class extends ApplicationError {
 export const InvalidToken = class extends ApplicationError {
   constructor(message) {
     super(message || 'Token Invalid', 403);
-  }
-};
-
-export const ExpiredToken = class extends ApplicationError {
-  constructor(message) {
-    super(message || 'User Token expired Login', 403);
-  }
-};
-
-export const HTTPError = class extends ApplicationError {
-  constructor(message, status) {
-    super(message || 'Unknown Error Occured', status || 500);
   }
 };
 

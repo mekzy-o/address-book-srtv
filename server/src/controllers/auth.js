@@ -1,6 +1,6 @@
 import { AuthService } from '../services';
 import {
-  UserExists, InvalidRequestBodyError, AuthenticationError,
+  UserExists, AuthenticationError,
 } from '../helpers/error';
 import Response from '../helpers/response';
 
@@ -26,7 +26,7 @@ export const signup = async (req, res, next) => {
 
 /**
   * @function signin
-  * @description Logs in the user to this account
+  * @description Logs in the user to user account
   * @param {object} req - The Request Object
   * @param {object} res - The Response Object
   * @param {object} next - The next function
@@ -35,8 +35,6 @@ export const signup = async (req, res, next) => {
 export const signin = async (req, res, next) => {
   try {
     const { body } = req;
-    const { email, password } = body;
-    if (!email || !password) return next(new InvalidRequestBodyError('Email and Password required for authentication', 400));
     const data = await AuthService.signinUser(body);
     if (data.error) return next(new AuthenticationError(data.error));
     const response = new Response(data, 200);

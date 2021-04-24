@@ -4,9 +4,6 @@ const env = process.env.ENV || process.env.NODE_ENV;
 
 const dbConfig = {
   test: {
-    // user: 'postgres',
-    // database: 'testdb',
-    // password: '',
     connectionString: process.env.DATABASE_URL,
   },
   dev: {
