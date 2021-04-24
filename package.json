@@ -6,22 +6,24 @@
   "scripts": {
     "start": "node server/dist/app.js",
     "start:dev": "export DEBUG=dev && nodemon --exec babel-node server/src/app.js",
-    "build": "babel server/src/ -d server/dist/",
+    "build": "babel-node server/src/ -d server/dist/",
     "test": "NODE_ENV=test nyc --reporter=text mocha ./server/src/test/ --recursive -r @babel/register -r @babel/polyfill",
     "nyc": "nyc --reporter=lcov npm run test && nyc report --reporter=text-lcov | coveralls",
     "heroku-postbuild": "npm run build",
-    "migrations": "export DEBUG=dev && babel-node server/src/database/dropTables && babel-node server/src/database/createTables"
+    "migrations": "export DEBUG=dev && babel-node server/src/database/dropTables.js && babel-node server/src/database/createTables.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^8.3.2",
     "morgan": "^1.10.0",
     "pg": "^8.6.0"

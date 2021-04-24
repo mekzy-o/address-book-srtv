@@ -4,7 +4,7 @@ const createTables = `
   CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY,
     email VARCHAR(130) UNIQUE NOT NULL,
-    password VARCHAR(200) NOT NULL,
+    password VARCHAR(200) NOT NULL
   );
   `;
 /**
@@ -15,7 +15,7 @@ const createTables = `
 const createDatabaseTables = async () => {
   await dbClient.query(createTables).then(() => {
     // eslint-disable-next-line no-console
-    console.log('Tables successfully dropped');
+    console.log('Tables successfully created');
   });
 };
 

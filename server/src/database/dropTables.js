@@ -1,7 +1,7 @@
 import dbClient from './index';
 
 const dropTables = `
-  DROP TABLE IF EXISTS user CASCADE
+  DROP TABLE IF EXISTS users CASCADE
   `;
 
 /**

@@ -15,6 +15,7 @@ module.exports = {
     'comma-dangle': 2,
     'no-console': 2,
     'class-methods-use-this': 0,
+    'import/prefer-default-export': 'off',
     curly: ['error', 'multi-line'],
     'import/no-unresolved': [2, { commonjs: true }],
     'no-shadow': ['error', { allow: ['req', 'res', 'err'] }],
