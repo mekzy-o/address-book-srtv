@@ -1,4 +1,4 @@
-import { check, validationResult } from 'express-validator';
+import { check, validationResult, header } from 'express-validator';
 import { InvalidRequestBodyError } from '../helpers/error';
 
 const authValidation = {
@@ -11,15 +11,11 @@ const authValidation = {
       .trim()
       .withMessage('Please input a valid email address'),
     check('password')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('Password is required')
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/, 'i')
-      .withMessage('Password must contain at least one uppercase letter, one lowercase letter and one numeric digit')
-      .trim()
-      .isLength({ min: 6 })
-      .withMessage('Password must be at least 8 characters'),
-    (req, res, next) => {
+      .notEmpty()
+      .withMessage('password is required')
+      .isLength({ min: 8 })
+      .withMessage('password must be at least 8 characters'),
+    (req, _res, next) => {
       const errors = validationResult(req);
       const errorMessage = {};
       if (!errors.isEmpty()) {
@@ -45,7 +41,24 @@ const authValidation = {
       .withMessage('Password is required')
       .isLength({ min: 8 })
       .withMessage('Password must be at least 8 characters'),
-    (req, res, next) => {
+    (req, _res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = {};
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((error) => {
+          errorMessage[error.param] = error.msg;
+        });
+        return next(new InvalidRequestBodyError(errorMessage));
+      }
+      return next();
+    },
+  ],
+  authenticate: [
+    header('authorization')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Authentication failed! Please make sure you are logged in'),
+    (req, _res, next) => {
       const errors = validationResult(req);
       const errorMessage = {};
       if (!errors.isEmpty()) {
