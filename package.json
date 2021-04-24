@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node server/dist/app.js",
     "start:dev": "export DEBUG=dev && nodemon --exec babel-node server/src/app.js",
-    "build": "babel-node server/src/ -d server/dist/",
+    "build": "npm run clean && babel server/src/ -d server/dist/",
+    "clean": "rm -rf server/dist && mkdir server/dist",
     "test": "NODE_ENV=test nyc --reporter=text mocha ./server/src/test/ --recursive -r @babel/register -r @babel/polyfill",
     "nyc": "nyc --reporter=lcov npm run test && nyc report --reporter=text-lcov | coveralls",
     "heroku-postbuild": "npm run build",
@@ -16,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "bcrypt": "^5.0.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
@@ -32,7 +37,6 @@
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.13.16",
     "@babel/node": "^7.13.13",
-    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.13.15",
     "@babel/register": "^7.13.16",
     "coveralls": "^3.1.0",
