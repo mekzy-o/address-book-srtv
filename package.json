@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "DEBUG=http node server/dist/app ",
-    "prestart": "npm run build",
+    "start": "node server/dist/app.js",
     "start:dev": "export DEBUG=dev && nodemon --exec babel-node server/src/app.js",
     "build": "babel-node server/src/ -d server/dist/",
     "test": "NODE_ENV=test nyc --reporter=text mocha ./server/src/test/ --recursive -r @babel/register -r @babel/polyfill",
