@@ -1,9 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 import * as User from '../repositories/user';
 import {
-  generateToken, validateHash, hashPassword,
+  generateToken, validateHash, hashPassword, verifyToken,
 } from '../helpers/auth';
 import { filterPassword } from '../helpers/utils';
+
+const tokenSecret = process.env.SECRET_KEY;
 
 /**
   * @function signinUser
@@ -42,4 +44,18 @@ export const registerUser = async (userDetails) => {
   userDetails.password = hashPassword(userDetails.password);
   await User.insertUser(userDetails);
   return signinUser({ email, password });
+};
+
+/**
+  * @function validateHash
+  * @description checks for validity by comparing the user inputted password and the hashed database
+  * @param {string} token hashed user password
+  * @returns {boolean} boolean result of the password validation
+  */
+export const validateToken = async (token) => {
+  const { id } = verifyToken(token, tokenSecret);
+  if (!id) return { error: 'token could not be verified.' };
+  const { rows: data } = await User.findById(id);
+  if (!data[0]) return { error: 'Cannot retrieve a user for the specified token.' };
+  return { token, ...data[0] };
 };

@@ -1,5 +1,6 @@
 import express from 'express';
 import auth from './auth';
+import firebaseRoute from './firebase';
 
 const router = express.Router();
 
@@ -10,5 +11,6 @@ router.get('/', (req, res) => res.status(200).json({
 }));
 
 router.use('/auth', auth);
+router.use('/firebase', firebaseRoute);
 
 export default router;
