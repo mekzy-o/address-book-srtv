@@ -1,0 +1,37 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Address Book",
+      "description": "Welcome to Address Book api docs\n "
+    },
+    "servers": ["localhost:5000"],
+    "basePath": "/api/",
+    "schemes": ["http", "https"],
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {},
+    "definitions": {
+      "Users": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,104 @@
+{
+    "post": {
+      "tags": [
+        "Auth"
+      ],
+      "summary": "Sign in user",
+      "description": "Login Existing User",
+      "parameters": [
+        {
+          "name": "Login Existing User",
+          "in": "body",
+          "description": "request payload",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "emekaofe@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "pa55w0rd"
+              }
+            }
+          }
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Login successful",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 200
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjA0ZWRiMDZiZDc2MTQwMzgyOWNkMzkiLCJuYW1lIjoiQW1vcyBUb2JpIiwiZW1haWwiOiJ0b2JpQGdva2FkYS5uZyIsImlhdCI"
+                      },
+                  "id": {
+                    "type": "string",
+                    "example": "3425525a-bh152522626290-452626"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "emekaofe@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Invalid Request Body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 422
+              },
+              "error": {
+                "type": "object",
+                "properties":{
+                    "error":{
+                       "type":"string",
+                      "example": "Email is Required"
+                     }
+                    }
+                },
+              "data": {
+                "type": "string",
+                "example": null
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid Login Credentials",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 401
+              },
+              "error": {
+                "type": "string",
+                "example": "Password and Email doesn't match"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

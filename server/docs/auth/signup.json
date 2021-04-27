@@ -1,0 +1,104 @@
+{
+    "post": {
+      "tags": [
+        "Auth"
+      ],
+      "summary": "Create a user",
+      "description": "Create a new user",
+      "parameters": [
+        {
+          "name": "Register a new user",
+          "in": "body",
+          "description": "request payload",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "emekaofe@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "pa55w0rd"
+              }
+            }
+          }
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "201": {
+          "description": "Signup successful",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 201
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjA0ZWRiMDZiZDc2MTQwMzgyOWNkMzkiLCJuY"
+                      },
+                  "id": {
+                    "type": "string",
+                    "example": "3425525a-bh152522626290-452626"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "emekaofe@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "User exist Error",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 409
+              },
+              "error": {
+                "type": "string",
+                "example": "User With that email already exists"
+              }
+            }
+          }
+        },
+        "422": {
+            "description": "Email is required",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 422
+                },
+                "error": {
+                  "type": "object",
+                  "properties":{
+                      "error":{
+                         "type":"string",
+                        "example": "Please input a valid email address"
+                       }
+                    }
+                  },
+                "data": {
+                  "type": "string",
+                  "example": null
+                }
+              }
+            }
+          }
+      }
+    }
+  }
