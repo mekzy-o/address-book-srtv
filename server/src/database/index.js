@@ -3,7 +3,11 @@ import config from './config';
 
 const { connectionString } = config;
 
-const pool = new Pool({ connectionString });
+const pool = new Pool({
+  connectionString,
+  ssl: { rejectUnauthorized: false },
+
+});
 
 export default {
   /**

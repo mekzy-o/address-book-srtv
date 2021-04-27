@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import dbClient from './index';
 
 const createTables = `
