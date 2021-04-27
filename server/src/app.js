@@ -1,11 +1,12 @@
 import '@babel/polyfill';
 import express from 'express';
 import Debug from 'debug';
+import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
 import cors from 'cors';
 import router from './routes';
 import { ErrorHandler } from './middlewares/errorHandler';
-// import Seed from './db/seed';
+import docs from '../docs';
 
 const debug = Debug('dev');
 
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => res.status(301).redirect('/api'));
 app.use('/api', router);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 app.use('*', (req, res) => {
   res.status(404).json({ status: 404, error: 'Resource not available' });
