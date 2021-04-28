@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import db from '../database';
+import models from '../database/models';
+
+const { User } = models;
 
 /**
   * @function findByEmail
@@ -8,9 +10,8 @@ import db from '../database';
   * @returns {object} user object
   */
 export const findByEmail = async (email) => {
-  const query = 'SELECT * FROM users WHERE email=$1';
-  const response = await db.query(query, [email]);
-  return response;
+  const findEmail = await User.findOne({ where: { email } });
+  return findEmail;
 };
 
 /**
@@ -20,9 +21,8 @@ export const findByEmail = async (email) => {
   * @returns {object} user object
   */
 export const findById = async (id) => {
-  const query = 'SELECT * FROM users WHERE id=$1';
-  const response = await db.query(query, [id]);
-  return response;
+  const findId = await User.findOne({ where: { id } });
+  return findId;
 };
 
 /**
@@ -33,7 +33,6 @@ export const findById = async (id) => {
   * @returns {object} user object
   */
 export const insertUser = async ({ email, password }) => {
-  const query = 'INSERT  INTO users ("email", "password") VALUES ($1, $2) RETURNING "email","password"';
-  const response = await db.query(query, [email, password]);
-  return response;
+  const createUser = User.create({ email, password });
+  return createUser;
 };

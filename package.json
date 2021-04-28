@@ -7,15 +7,18 @@
     "node": "14.x"
   },
   "scripts": {
-    "start": "node server/dist/app.js",
+    "start": "node build/src/app.js",
     "start:dev": "export DEBUG=dev && nodemon --exec babel-node server/src/app.js",
-    "build": "npm run clean && babel server/src/ -d server/dist/",
-    "clean": "rm -rf server/dist && mkdir server/dist",
-    "test": "NODE_ENV=test nyc --reporter=text mocha  --timeout 15000 --exit ./server/src/test/ --recursive -r @babel/register -r @babel/polyfill",
+    "build": "npm run clean && babel -d ./build ./server --copy-files",
+    "clean": "rm -rf build && mkdir build",
+    "test": "export NODE_ENV=test && nyc --reporter=text mocha  --timeout 15000 --exit ./server/src/test/ --recursive -r @babel/register -r @babel/polyfill",
     "nyc": "nyc --reporter=lcov npm run test && nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "npm run build && npm run heroku-migrate",
-    "heroku-migrate": "node server/dist/database/dropTables.js && node server/dist/database/createTables.js",
-    "migrate": "export DEBUG=dev && babel-node server/src/database/dropTables.js && babel-node server/src/database/createTables.js"
+    "migrate": "sequelize db:migrate",
+    "dev:migrate": "export DEBUG=dev && sequelize db:migrate",
+    "undo:migration": "sequelize db:migrate:undo:all",
+    "reset:db": "npm run undo:migration && npm run dev:migrate",
+    "heroku:db": "npm run migrate",
+    "heroku-postbuild": "npm run heroku:db && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +38,8 @@
     "mocha": "^8.3.2",
     "morgan": "^1.10.0",
     "pg": "^8.6.0",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {

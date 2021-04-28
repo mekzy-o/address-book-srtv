@@ -3,7 +3,6 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chaiHttp from 'chai-http';
 import app from '../app';
-import db from '../database';
 import { mockContactDetails } from './mockData';
 
 chai.use(chaiAsPromised);
@@ -13,13 +12,8 @@ const request = chai.request(app).keepOpen();
 const { expect } = chai;
 let userToken;
 
-before(() => {
-  db.query('DELETE FROM users');
-});
-
 after(() => {
   request.close();
-  db.query('DELETE FROM users');
 });
 
 describe('POST firebase api/contacts', () => {
