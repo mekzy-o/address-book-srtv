@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import * as User from '../repositories/user';
+import * as UserRepository from '../repositories/user';
 import {
   generateToken, validateHash, hashPassword, verifyToken,
 } from '../helpers/auth';
-import { filterPassword } from '../helpers/utils';
+import { filterOutFields } from '../helpers/utils';
 
 const tokenSecret = process.env.SECRET_KEY;
 
@@ -15,15 +15,15 @@ const tokenSecret = process.env.SECRET_KEY;
   * @returns {object} user object
   */
 export const signinUser = async ({ email, password }) => {
-  const findUser = await User.findByEmail(email);
-  const authData = findUser.rows[0];
+  const findUser = await UserRepository.findByEmail(email);
+  const authData = findUser;
   if (!authData) return { error: 'User Email doesn\'t exist' };
 
   const isValidPassword = validateHash(password, authData.password);
   if (!isValidPassword) return { error: 'Password and email doesnt match' };
   const { id, email: userEmail } = authData;
   const token = generateToken({ id, userEmail });
-  return { token, ...filterPassword(authData) };
+  return { token, ...filterOutFields(authData) };
 };
 
 /**
@@ -37,12 +37,12 @@ export const registerUser = async (userDetails) => {
 
   const { email, password } = userDetails;
 
-  const { rows: data } = await User.findByEmail(email);
-  const userExist = !!(data[0]);
+  const result = await UserRepository.findByEmail(email);
+  const userExist = !!(result);
 
   if (userExist) return { error: 'User With that email already exists' };
   userDetails.password = hashPassword(userDetails.password);
-  await User.insertUser(userDetails);
+  await UserRepository.insertUser(userDetails);
   return signinUser({ email, password });
 };
 
@@ -55,7 +55,7 @@ export const registerUser = async (userDetails) => {
 export const validateToken = async (token) => {
   const { id } = verifyToken(token, tokenSecret);
   if (!id) return { error: 'token could not be verified.' };
-  const { rows: data } = await User.findById(id);
-  if (!data[0]) return { error: 'Cannot retrieve a user for the specified token.' };
-  return { token, ...data[0] };
+  const result = await UserRepository.findById(id);
+  if (!result) return { error: 'Cannot retrieve a user for the specified token.' };
+  return { token, ...filterOutFields(result) };
 };

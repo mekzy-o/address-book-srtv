@@ -3,6 +3,7 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import models from '../database/models';
 
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
@@ -10,7 +11,24 @@ chai.use(chaiHttp);
 const request = chai.request(app).keepOpen();
 const { expect } = chai;
 
+const { User } = models;
+
+/**
+ * @function clearTableForTesting
+ * @description clears the user table for testing
+ * @returns {*} nothing
+ */
+const clearTableForTesting = () => User.destroy({
+  where: {},
+  truncate: true,
+});
+
+before(() => {
+  clearTableForTesting();
+});
+
 after(() => {
+  clearTableForTesting();
   request.close();
 });
 
@@ -64,7 +82,7 @@ describe('POST auth/signup', () => {
       email: 'emekaofe22@gmail.com',
       password: 'Maths@104',
     };
-    it('Should throw error if  user already exist in the database', async () => {
+    it('Should throw error if user already exist in the database', async () => {
       const requestOne = await request
         .post(url)
         .send(user);
@@ -176,7 +194,7 @@ describe('Signin API', () => {
         .post(url)
         .send(loginData);
       expect(status).to.be.eql(200);
-      expect(data.email).to.be.eqls(loginData.email);
+      expect(data.email).to.be.eql(loginData.email);
     });
   });
 });

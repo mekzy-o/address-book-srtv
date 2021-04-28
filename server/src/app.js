@@ -35,5 +35,4 @@ app.use(ErrorHandler);
 
 export default app.listen(port, async () => {
   debug(`Server started on port ${port}`);
-  // await Seed();
 });
