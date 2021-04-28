@@ -5,7 +5,7 @@
       "title": "Address Book",
       "description": "Welcome to Address Book api docs\n "
     },
-    "servers": ["localhost:5000"],
+    "servers": ["localhost:5000", "https://address-book-strv.herokuapp.com"],
     "basePath": "/api/",
     "schemes": ["http", "https"],
     "securityDefinitions": {
