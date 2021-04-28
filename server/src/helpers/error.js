@@ -18,17 +18,6 @@ class ApplicationError extends Error {
 /**
  * @class ApplicationError
  * @description Contains controller methods for each error
- * @exports ApplicationError
- */
-export const ResourceNotFoundError = class extends ApplicationError {
-  constructor(message) {
-    super(message || 'Resource requested doesnt exist', 404);
-  }
-};
-
-/**
- * @class ApplicationError
- * @description Contains controller methods for each error
  * @params {message} Not Found error message
  * @exports NotFoundError
  */

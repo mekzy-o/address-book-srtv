@@ -30,7 +30,7 @@ The API is currently in version 1 (v1) and is hosted at https://address-book-str
 
 # API Documentation
 
-The API endpoints are documented using swagger.json and can be accessed here [API-Docs](https://address-book-strv.herokuapp.com/api/docs)
+The API endpoints are documented using swagger.json and can be accessed at [API-Docs](https://address-book-strv.herokuapp.com/api/docs)
 
 
 ## Required Features

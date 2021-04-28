@@ -1,6 +1,7 @@
 import { check, validationResult, header } from 'express-validator';
 import { InvalidRequestBodyError } from '../helpers/error';
 
+// Express validator middleware for validating authentication endpoints
 const authValidation = {
   signup: [
     check('email')

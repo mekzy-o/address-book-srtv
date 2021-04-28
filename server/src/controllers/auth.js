@@ -6,7 +6,7 @@ import Response from '../helpers/response';
 
 /**
   * @function signup
-  * @description Adds a user's details to the database
+  * @description creates a new user account
   * @param {object} req - The Request Object
   * @param {object} res - The Response Object
   * @param {object} next - The next function
@@ -26,7 +26,7 @@ export const signup = async (req, res, next) => {
 
 /**
   * @function signin
-  * @description Logs in the user to user account
+  * @description Logs in the user to his account
   * @param {object} req - The Request Object
   * @param {object} res - The Response Object
   * @param {object} next - The next function

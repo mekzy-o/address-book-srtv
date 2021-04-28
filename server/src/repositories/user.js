@@ -16,7 +16,7 @@ export const findByEmail = async (email) => {
 
 /**
   * @function findById
-  * @description searches the users table for user email
+  * @description searches the users table for user Id
   * @param {string} id user id
   * @returns {object} user object
   */
@@ -27,7 +27,7 @@ export const findById = async (id) => {
 
 /**
   * @function insertUser
-  * @description searches the users table for user email
+  * @description creates/inserts a new user to the users table
   * @param {string} email user email address
   * @param {string} password user password
   * @returns {object} user object
